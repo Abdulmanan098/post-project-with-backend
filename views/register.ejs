@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register - Institute Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+    
+    .main-container {
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    .content-section {
+      flex: 1;
+      background: white;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .background-section {
+      flex: 1;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .background-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23a)"/><circle cx="800" cy="300" r="150" fill="url(%23a)"/><circle cx="400" cy="700" r="120" fill="url(%23a)"/></svg>');
+      opacity: 0.3;
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.9);
+      color: #667eea;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: 2px solid #667eea;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+      background: #667eea;
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .input-field {
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid #e1e5e9;
+      border-radius: 12px;
+      padding: 12px 16px;
+      transition: all 0.3s ease;
+      color: #333;
+      width: 100%;
+      font-size: 16px;
+    }
+    
+    .input-field:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+    }
+    
+    .wavy-divider {
+      position: absolute;
+      left: -50px;
+      top: 0;
+      bottom: 0;
+      width: 100px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+    
+    @media (max-width: 768px) {
+      .main-container {
+        flex-direction: column;
+      }
+      
+      .background-section {
+        display: none;
+      }
+      
+      .content-section {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <!-- Content Section -->
+    <div class="content-section">
+      <div class="max-w-2xl mx-auto w-full">
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+          <div class="avatar mx-auto mb-6">
+            <i class="fas fa-user-plus"></i>
+          </div>
+          <h1 class="text-4xl font-bold text-gray-800 mb-2">Join Our Community</h1>
+          <p class="text-gray-600 text-lg">Create your account and start sharing</p>
+        </div>
+        
+        <!-- Register Form -->
+        <div class="glass-card p-8">
+          <form method="POST" action="/register" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-gray-700 text-lg font-semibold mb-3">
+                  <i class="fas fa-user mr-3 text-purple-500"></i>Full Name
+                </label>
+                <input 
+                  type="text" 
+                  name="name" 
+                  required
+                  placeholder="Enter your full name"
+                  class="input-field"
+                />
+              </div>
+              
+              <div>
+                <label class="block text-gray-700 text-lg font-semibold mb-3">
+                  <i class="fas fa-at mr-3 text-purple-500"></i>Username
+                </label>
+                <input 
+                  type="text" 
+                  name="username" 
+                  required
+                  placeholder="Choose a username"
+                  class="input-field"
+                />
+              </div>
+              
+              <div>
+                <label class="block text-gray-700 text-lg font-semibold mb-3">
+                  <i class="fas fa-envelope mr-3 text-purple-500"></i>Email Address
+                </label>
+                <input 
+                  type="email" 
+                  name="email" 
+                  required
+                  placeholder="Enter your email"
+                  class="input-field"
+                />
+              </div>
+              
+              <div>
+                <label class="block text-gray-700 text-lg font-semibold mb-3">
+                  <i class="fas fa-birthday-cake mr-3 text-purple-500"></i>Age
+                </label>
+                <input 
+                  type="number" 
+                  name="age" 
+                  required
+                  placeholder="Enter your age"
+                  class="input-field"
+                />
+              </div>
+              
+              <div>
+                <label class="block text-gray-700 text-lg font-semibold mb-3">
+                  <i class="fas fa-lock mr-3 text-purple-500"></i>Password
+                </label>
+                <input 
+                  type="password" 
+                  name="password" 
+                  required
+                  placeholder="Create a password"
+                  class="input-field"
+                />
+              </div>
+              
+              <div>
+                <label class="block text-gray-700 text-lg font-semibold mb-3">
+                  <i class="fas fa-lock mr-3 text-purple-500"></i>Confirm Password
+                </label>
+                <input 
+                  type="password" 
+                  name="confirmPassword" 
+                  required
+                  placeholder="Confirm your password"
+                  class="input-field"
+                />
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-between pt-6">
+              <button 
+                type="submit" 
+                class="btn-primary text-lg">
+                <i class="fas fa-user-plus mr-3"></i>Create Account
+              </button>
+              
+              <a href="/login" class="btn-secondary">
+                <i class="fas fa-sign-in-alt mr-3"></i>Sign In
+              </a>
+            </div>
+          </form>
+          
+          <div class="mt-8 pt-6 border-t border-gray-200">
+            <div class="text-center">
+              <p class="text-gray-500 text-lg mb-4">
+                <i class="fas fa-shield-alt mr-3 text-purple-500"></i>
+                Your data is secure with us
+              </p>
+              <div class="flex justify-center space-x-2">
+                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <!-- Background Section -->
+    <div class="background-section">
+      <div class="wavy-divider"></div>
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="text-center text-white">
+          <div class="text-6xl mb-4">🌟</div>
+          <h2 class="text-3xl font-bold mb-2">Join Our Community</h2>
+          <p class="text-xl opacity-90">Connect with amazing people</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community Posts - Institute Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+    
+    .main-container {
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    .content-section {
+      flex: 1;
+      background: white;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .background-section {
+      flex: 1;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .background-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23a)"/><circle cx="800" cy="300" r="150" fill="url(%23a)"/><circle cx="400" cy="700" r="120" fill="url(%23a)"/></svg>');
+      opacity: 0.3;
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.9);
+      color: #667eea;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: 2px solid #667eea;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+      background: #667eea;
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .post-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 16px 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(102, 126, 234, 0.1);
+    }
+    
+    .post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(102, 126, 234, 0.15);
+    }
+    
+    .avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #667eea;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+    
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .slide-in {
+      opacity: 0;
+      transform: translateX(-30px);
+      animation: slideInLeft 0.8s ease forwards;
+    }
+    
+    @keyframes slideInLeft {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .bounce-in {
+      opacity: 0;
+      transform: scale(0.3);
+      animation: bounceIn 0.8s ease forwards;
+    }
+    
+    @keyframes bounceIn {
+      0% { opacity: 0; transform: scale(0.3); }
+      50% { opacity: 1; transform: scale(1.05); }
+      70% { transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    
+    .floating-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(102, 126, 234, 0.3);
+      border-radius: 50%;
+      animation: floatParticle 8s linear infinite;
+    }
+    
+    @keyframes floatParticle {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+    
+    .hero-header {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .stats-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(102, 126, 234, 0.1);
+    }
+    
+    .stats-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+    }
+    
+    .interaction-btn {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(102, 126, 234, 0.2);
+      border-radius: 8px;
+      padding: 8px 16px;
+      color: #667eea;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .interaction-btn:hover {
+      background: #667eea;
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .interaction-btn.liked {
+      background: #667eea;
+      color: white;
+    }
+    
+    .empty-state {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      padding: 60px 40px;
+      text-align: center;
+      border: 2px dashed rgba(102, 126, 234, 0.3);
+    }
+    
+    .empty-state:hover {
+      border-color: #667eea;
+      transform: translateY(-2px);
+    }
+    
+    .wavy-divider {
+      position: absolute;
+      left: -50px;
+      top: 0;
+      bottom: 0;
+      width: 100px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+    
+    .edit-form {
+      display: none;
+    }
+    
+    .edit-form.active {
+      display: block;
+    }
+    
+    .post-content {
+      display: block;
+    }
+    
+    .post-content.hidden {
+      display: none;
+    }
+    
+    .action-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 16px 24px;
+      border-radius: 12px;
+      color: white;
+      font-weight: 600;
+      z-index: 1000;
+      transform: translateX(400px);
+      transition: all 0.3s ease;
+      max-width: 300px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+    
+    .notification.success {
+      background: linear-gradient(135deg, #10b981, #059669);
+    }
+    
+    .notification.error {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+    
+    .notification.warning {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+    
+    .notification.info {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+    }
+    
+    @media (max-width: 768px) {
+      .main-container {
+        flex-direction: column;
+      }
+      
+      .background-section {
+        display: none;
+      }
+      
+      .content-section {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Particles -->
+  <div class="floating-particles" id="particles"></div>
+  
+  <!-- Three.js Background -->
+  <div id="three-container"></div>
+  
+  <!-- Notification Container -->
+  <div id="notification-container"></div>
+  
+  <!-- Hero Header -->
+  <div class="hero-header">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <div class="avatar bounce-in">
+            <i class="fas fa-comments"></i>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold gradient-text">Institute Portal</h1>
+            <p class="text-gray-600 text-sm">Community Posts & Discussions</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="flex space-x-2">
+            <div class="pulse-dot"></div>
+            <div class="pulse-dot" style="animation-delay: 0.5s;"></div>
+            <div class="pulse-dot" style="animation-delay: 1s;"></div>
+          </div>
+          <a href="/profile" class="btn-primary">
+            <i class="fas fa-user mr-2"></i>My Profile
+          </a>
+          <a href="/logout" class="btn-secondary">
+            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="min-h-screen p-4">
+    <div class="max-w-6xl mx-auto">
+      
+      <!-- Header Section -->
+      <div class="glass-card p-8 mb-8 floating-animation fade-in">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-6">
+            <div class="avatar bounce-in" style="animation-delay: 0.2s;">
+              <i class="fas fa-stream"></i>
+            </div>
+            <div>
+              <h2 class="text-3xl font-bold gradient-text mb-2 slide-in" style="animation-delay: 0.3s;">
+                Community Posts
+              </h2>
+              <p class="text-gray-600 text-lg slide-in" style="animation-delay: 0.4s;">
+                Discover what's happening in our community
+              </p>
+            </div>
+          </div>
+          <div class="text-right slide-in" style="animation-delay: 0.5s;">
+            <div class="text-sm text-gray-500 mb-2">Live Updates</div>
+            <div class="flex items-center space-x-2">
+              <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <span class="text-green-600 font-semibold">Active</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Stats Section -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="stats-card fade-in" style="animation-delay: 0.1s;">
+          <div class="text-3xl font-bold gradient-text mb-2">
+            <%= posts ? posts.length : 0 %>
+          </div>
+          <div class="text-gray-600">Total Posts</div>
+        </div>
+        <div class="stats-card fade-in" style="animation-delay: 0.2s;">
+          <div class="text-3xl font-bold gradient-text mb-2">
+            <%= posts ? posts.reduce((sum, post) => sum + (post.likes ? post.likes.length : 0), 0) : 0 %>
+          </div>
+          <div class="text-gray-600">Total Likes</div>
+        </div>
+        <div class="stats-card fade-in" style="animation-delay: 0.3s;">
+          <div class="text-3xl font-bold gradient-text mb-2">
+            <%= posts ? posts.length : 0 %>
+          </div>
+          <div class="text-gray-600">Active Users</div>
+        </div>
+      </div>
+      
+      <!-- Create Post Section -->
+      <div class="glass-card p-8 mb-8 fade-in" style="animation-delay: 0.4s;">
+        <div class="flex items-center mb-6">
+          <div class="avatar mr-4 bounce-in" style="animation-delay: 0.5s;">
+            <i class="fas fa-edit"></i>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold gradient-text">Create New Post</h3>
+            <p class="text-gray-600">Share your thoughts with the community</p>
+          </div>
+        </div>
+        
+        <form id="createPostForm" class="space-y-6">
+          <div>
+            <textarea 
+              name="content" 
+              id="postContent"
+              placeholder="What's on your mind?"
+              required
+              class="w-full h-32 p-4 border-2 border-gray-200 rounded-lg resize-none focus:border-purple-500 focus:outline-none"
+            ></textarea>
+          </div>
+          
+          <div class="flex justify-end">
+            <button 
+              type="submit" 
+              class="btn-primary text-lg">
+              <i class="fas fa-paper-plane mr-2"></i>Post
+            </button>
+          </div>
+        </form>
+      </div>
+      
+      <!-- Posts Section -->
+      <div class="glass-card p-8 fade-in" style="animation-delay: 0.6s;">
+        <div class="flex items-center mb-8">
+          <div class="avatar mr-4 bounce-in" style="animation-delay: 0.7s;">
+            <i class="fas fa-comments"></i>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold gradient-text">Recent Posts</h3>
+            <p class="text-gray-600">Latest updates from our community members</p>
+          </div>
+        </div>
+        
+        <div class="space-y-6">
+          <% if (posts && posts.length > 0) { %>
+            <% posts.slice().reverse().forEach((post, index) => { %>
+              <div class="post-card slide-in" style="animation-delay: <%= 0.8 + (index * 0.1) %>s;" data-post-id="<%= post._id %>">
+                <div class="flex items-start space-x-4">
+                  <div class="flex-shrink-0">
+                    <div class="avatar">
+                      <span class="text-white font-bold text-lg">
+                        <%= post.user ? post.user.username.charAt(0).toUpperCase() : 'U' %>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center justify-between mb-3">
+                      <div class="flex items-center space-x-3">
+                        <h4 class="text-lg font-semibold text-gray-800">
+                          <%= post.user ? post.user.username : 'Anonymous User' %>
+                        </h4>
+                        <span class="text-gray-400">•</span>
+                        <span class="text-gray-500 text-sm">
+                          <%= new Date(post.date).toLocaleDateString('en-US', { 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          }) %>
+                        </span>
+                      </div>
+                      <% if (post.user && post.user._id === user._id) { %>
+                        <div class="flex space-x-3">
+                          <button onclick="editPost('<%= post._id %>')" class="action-btn bg-blue-500 hover:bg-blue-600 text-white">
+                            <i class="fas fa-edit mr-1"></i>Edit
+                          </button>
+                          <button onclick="deletePost('<%= post._id %>')" class="action-btn bg-red-500 hover:bg-red-600 text-white">
+                            <i class="fas fa-trash mr-1"></i>Delete
+                          </button>
+                        </div>
+                      <% } %>
+                    </div>
+                    
+                    <!-- Post Content -->
+                    <div class="post-content" id="content-<%= post._id %>">
+                      <p class="text-gray-700 leading-relaxed text-base mb-4">
+                        <%= post.content %>
+                      </p>
+                    </div>
+                    
+                    <!-- Edit Form -->
+                    <div class="edit-form" id="edit-<%= post._id %>">
+                      <textarea 
+                        class="w-full p-3 border-2 border-gray-200 rounded-lg resize-none focus:border-purple-500 focus:outline-none mb-3"
+                        id="edit-text-<%= post._id %>"
+                      ><%= post.content %></textarea>
+                      <div class="flex space-x-2">
+                        <button onclick="saveEdit('<%= post._id %>')" class="btn-primary text-sm">
+                          <i class="fas fa-save mr-1"></i>Save
+                        </button>
+                        <button onclick="cancelEdit('<%= post._id %>')" class="btn-secondary text-sm">
+                          <i class="fas fa-times mr-1"></i>Cancel
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-6 pt-4 border-t border-gray-200">
+                      <button 
+                        onclick="likePost('<%= post._id %>')" 
+                        class="interaction-btn <%= post.likes && post.likes.includes(user._id) ? 'liked' : '' %>"
+                        id="like-<%= post._id %>">
+                        <i class="fas fa-heart mr-2"></i>
+                        <span class="text-sm" id="like-count-<%= post._id %>"><%= post.likes ? post.likes.length : 0 %></span>
+                      </button>
+                      <button class="interaction-btn">
+                        <i class="fas fa-comment mr-2"></i>
+                        <span class="text-sm">Comment</span>
+                      </button>
+                      <button class="interaction-btn">
+                        <i class="fas fa-share mr-2"></i>
+                        <span class="text-sm">Share</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <div class="empty-state fade-in" style="animation-delay: 0.8s;">
+              <div class="avatar mx-auto mb-6 bounce-in" style="animation-delay: 1s;">
+                <i class="fas fa-comments"></i>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-700 mb-4 slide-in" style="animation-delay: 1.1s;">
+                No Posts Yet
+              </h3>
+              <p class="text-gray-500 text-lg mb-6 slide-in" style="animation-delay: 1.2s;">
+                Be the first to share something amazing with the community!
+              </p>
+              <a href="/profile" class="btn-primary slide-in" style="animation-delay: 1.3s;">
+                <i class="fas fa-edit mr-2"></i>Create Your First Post
+              </a>
+            </div>
+          <% } %>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <script>
+    // Show Notification Function
+    function showNotification(message, type = 'info') {
+      const container = document.getElementById('notification-container');
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.textContent = message;
+      
+      container.appendChild(notification);
+      
+      // Show notification
+      setTimeout(() => {
+        notification.classList.add('show');
+      }, 100);
+      
+      // Hide and remove notification
+      setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+          container.removeChild(notification);
+        }, 300);
+      }, 3000);
+    }
+    
+    // Like Post Function
+    async function likePost(postId) {
+      try {
+        const response = await fetch(`/posts/${postId}/like`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          const likeBtn = document.getElementById(`like-${postId}`);
+          const likeCount = document.getElementById(`like-count-${postId}`);
+          
+          if (data.liked) {
+            likeBtn.classList.add('liked');
+            showNotification('Post liked!', 'success');
+          } else {
+            likeBtn.classList.remove('liked');
+            showNotification('Post unliked!', 'info');
+          }
+          
+          likeCount.textContent = data.likesCount;
+        }
+      } catch (error) {
+        console.error('Error liking post:', error);
+        showNotification('Error liking post', 'error');
+      }
+    }
+    
+    // Edit Post Function
+    function editPost(postId) {
+      const contentDiv = document.getElementById(`content-${postId}`);
+      const editDiv = document.getElementById(`edit-${postId}`);
+      
+      contentDiv.classList.add('hidden');
+      editDiv.classList.add('active');
+      showNotification('Edit mode activated', 'info');
+    }
+    
+    // Cancel Edit Function
+    function cancelEdit(postId) {
+      const contentDiv = document.getElementById(`content-${postId}`);
+      const editDiv = document.getElementById(`edit-${postId}`);
+      
+      contentDiv.classList.remove('hidden');
+      editDiv.classList.remove('active');
+      showNotification('Edit cancelled', 'warning');
+    }
+    
+    // Save Edit Function
+    async function saveEdit(postId) {
+      const editText = document.getElementById(`edit-text-${postId}`).value;
+      
+      try {
+        const response = await fetch(`/posts/${postId}/edit`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ content: editText })
+        });
+        
+        if (response.ok) {
+          showNotification('Post updated successfully!', 'success');
+          const contentDiv = document.getElementById(`content-${postId}`);
+          const editDiv = document.getElementById(`edit-${postId}`);
+          
+          contentDiv.querySelector('p').textContent = editText;
+          contentDiv.classList.remove('hidden');
+          editDiv.classList.remove('active');
+        } else {
+          showNotification('Failed to update post. Please try again.', 'error');
+        }
+      } catch (error) {
+        console.error('Error editing post:', error);
+        showNotification('Error updating post. Please try again.', 'error');
+      }
+    }
+    
+    // Delete Post Function
+    async function deletePost(postId) {
+      const confirmDelete = confirm('Are you sure you want to delete this post? This action cannot be undone.');
+      
+      if (confirmDelete) {
+        try {
+          const response = await fetch(`/posts/${postId}/delete`, {
+            method: 'DELETE',
+          });
+          
+          if (response.ok) {
+            showNotification('Post deleted successfully!', 'success');
+            const postCard = document.querySelector(`[data-post-id="${postId}"]`);
+            if (postCard) {
+              postCard.remove();
+            } else {
+              location.reload();
+            }
+          } else {
+            showNotification('Failed to delete post. Please try again.', 'error');
+          }
+        } catch (error) {
+          console.error('Error deleting post:', error);
+          showNotification('Error deleting post. Please try again.', 'error');
+        }
+      }
+    }
+    
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      // Handle post creation via AJAX
+      document.getElementById('createPostForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const postContent = document.getElementById('postContent').value;
+ 
+        try {
+          const response = await fetch('/posts', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ content: postContent })
+          });
+ 
+          if (response.ok) {
+            showNotification('Post created successfully!', 'success');
+            // Reload the page to show the new post
+            location.reload();
+          } else {
+            showNotification('Failed to create post.', 'error');
+            console.error('Error creating post:', response.status);
+          }
+        } catch (error) {
+          console.error('Error creating post:', error);
+          showNotification('Error creating post.', 'error');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
